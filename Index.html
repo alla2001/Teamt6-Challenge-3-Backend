@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Dash, the mascot Flutter</title>
+
+</head>
+<style>
+
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
+
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: #26648e;
+    }
+
+    .img-dash {
+        width: 400px;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 350px;
+        background: #53d2dc;
+        padding: 20px;
+        border-radius: 25px;
+        position: relative;
+    }
+
+    .title {
+        font-size: 28px;
+        color: #f0e8db;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        position: relative;
+        text-align: center;
+    }
+
+    .message {
+        color: #f0e8db;
+        font-size: 20px;
+        font-weight: 525;
+        text-align: center;
+    }
+
+    .form-group {
+        display: flex;
+        width: 100%;
+        gap: 6px;
+    }
+
+    .form label {
+        position: relative;
+    }
+
+        .form label input {
+            width: 100%;
+            padding: 10px 10px 20px 10px;
+            outline: none;
+            border: none;
+            border-radius: 10px;
+        }
+
+            .form label input + span {
+                position: absolute;
+                left: 10px;
+                top: 15px;
+                color: #000323;
+                font-size: 0.9em;
+                cursor: text;
+                transition: 0.3s ease;
+            }
+
+            .form label input:placeholder-shown + span {
+                top: 15px;
+                font-size: 0.9em;
+            }
+
+            .form label input:focus + span,
+            .form label input:valid + span {
+                top: 25px;
+                font-size: 0.9em;
+                font-weight: 600;
+            }
+
+            .form label input:valid + span {
+                color: #4f8fc0;
+            }
+
+    .submit {
+        border: none;
+        outline: none;
+        background: #fbc66c;
+        padding: 10px;
+        border-radius: 10px;
+        color: #000323;
+        font-size: 16px;
+        transform: 0.3s ease;
+        cursor: pointer;
+    }
+
+        .submit:hover {
+            background: #d8a03f;
+            transition: 0.3s;
+        }
+</style>
+<body>
+    <div>
+
+    </div>
+    
+    <form autocomplete="off" class="form" method="POST" id="form">
+        <p class="title">Welcome to our event</p>
+        <p class="message">Participate and Register now!</p>
+        <div class="form-group">
+            <label>
+                <input type="text" id="FirstName" name="FirstName" required>
+                <span>Firstname</span>
+            </label>
+            <label>
+                <input type="text" id="LastName" name="LastName" required>
+                <span>Lastname</span>
+            </label>
+        </div>
+        <label>
+            <input type="email" id="Email" name="Email" required>
+            <span>Email</span>
+        </label>
+
+        <!--<label>
+          <input type="number" ma required>
+          <span>Age</span>
+        </label>
+        <label>
+          <input type="text" required>
+          <span>Enter your gender</span>
+        </label>
+        <label>
+          <input type="text" required>
+          <span>Show your motivation</span>
+        </label>-->
+        <button class="submit"> Submit</button>
+    </form>
+</body>
+</html>
+<script>
+   
+    function handleSubmit(event) {
+        event.preventDefault();
+
+        const data = new FormData(event.target);
+        const FirstName = data.get('FirstName');
+        const LastName = data.get('LastName');
+        const Email = data.get('Email');
+
+        console.log({ FirstName, LastName, Email });
+        fetch('http://localhost:1225/register', {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                FirstName: data.get('FirstName'),
+                LastName: data.get('FirstName'),
+                Email: data.get('Email')
+            })
+        }).finally(() => { alert("Registered") });
+    }
+
+    const form = document.querySelector('form');
+    form.addEventListener('submit', handleSubmit);
+</script>
